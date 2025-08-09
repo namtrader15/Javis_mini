@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>JARVIS AI – Trang Chủ</title>
+
+  <!-- SEO & Sharing -->
+  <meta name="description" content="JAVIS — Trợ lý giao dịch AI: phân tích xác suất, quản trị rủi ro 1%/lệnh, ưu tiên an toàn và kỷ luật."/>
+  <link rel="canonical" href="https://your-domain.com/"/>
+  <meta property="og:title" content="JAVIS — Trợ lý giao dịch AI"/>
+  <meta property="og:description" content="Trade Smarter with J.A.R.V.I.S AI"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://your-domain.com/"/>
+  <meta property="og:image" content="https://your-domain.com/static/og.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Open+Sans:wght@400;600&display=swap&subset=vietnamese" rel="stylesheet"/>
+
+  <style>
+    /* =========================
+       CLEAN THEME & BASE STYLES
+       (fixed malformed CSS)
+    ==========================*/
+    :root{
+      /* THEME giống ảnh: tím → cyan */
+      --brand-start: #6D5EF6; /* tím */
+      --brand-end: #22D3EE;   /* cyan */
+      --bg: radial-gradient(1400px 600px at 15% -10%, #131b3b 0%, #0b1026 55%, #090f22 100%),
+            linear-gradient(180deg, #0b1026 0%, #121437 58%, #0f0b26 100%);
+      --surface: rgba(255,255,255,.06);
+      --glass: rgba(255,255,255,.08);
+      --blur: saturate(120%) blur(8px);
+      --c1: #7deaff; /* accent heading */
+      --c2: rgba(125, 158, 255, .35); /* border subtle */
+      --c3: #e6eef7; /* text on dark */
+      --muted: #b9c7da;
+      --star: #9fd7ff; /* stars */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      /* Legibility variables for feature cards */
+      --card-bg1: rgba(10, 16, 33, .92);
+      --card-bg2: rgba(10, 16, 33, .84);
+      --card-title: #c9efff;   /* sáng nhưng không chói */
+      --card-text: #eef6ff;    /* body text */
+    }
+    /* Light mode disabled to keep consistent dark theme across devices */
+body{ margin:0; font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--c3); background:var(--bg); overflow-y:auto; overflow-x:hidden; scroll-behavior:smooth; }
+
+    /* Reset */
+    *,*::before,*::after{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{ margin:0; font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--c3); background:var(--bg); overflow-y:auto; scroll-behavior:smooth; }
+    img{ max-width:100%; height:auto; display:block; }
+    a{ color:var(--c1); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    :focus-visible{ outline:2px solid var(--c1); outline-offset:2px; }
+
+    /* Stars layer */
+    #stars-bg{ position:fixed; inset:0; z-index:-1; opacity:.6; }
+
+    /* Layout */
+    .container{ width:100%; max-width:1100px; margin:0 auto; padding-left: calc(1rem + env(safe-area-inset-left, 0px)); padding-right: calc(1rem + env(safe-area-inset-right, 0px)); }
+    .center{ text-align:center; }
+    .spacer{ height:2rem; }
+
+    /* Hero */
+    #hero{ padding:5rem 0 3rem; }
+    #hero h1{
+      font-family:'Montserrat',sans-serif; font-weight:800; letter-spacing:.2px;
+      font-size:clamp(2rem, 6vw, 4rem); margin:0 0 1rem;
+      background: linear-gradient(180deg, #cfe9ff 10%, #b7f5ff 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow: 0 0 24px rgba(34,211,238,.15);
+    }
+    #hero p{ font-size:1.125rem; color:var(--muted); margin:0 auto 2rem; max-width:720px; line-height:1.6; }
+
+    .hero-buttons{ display:flex; flex-wrap:wrap; gap:.8rem; justify-content:center; }
+    .glow-btn, .coming-soon-btn{
+      position:relative; overflow:hidden; border-radius:9999px; font-weight:700;
+      padding:.9rem 1.25rem; color:#0a0f1f; /* chữ đậm trên nền gradient */
+      background-image: linear-gradient(135deg, var(--brand-start), var(--brand-end));
+      border:1px solid rgba(124,94,246,.35);
+      box-shadow: 0 8px 28px rgba(34,211,238,.25), 0 2px 0 rgba(255,255,255,.08) inset;
+      cursor:pointer; transition: transform .15s ease, box-shadow .25s ease, filter .25s ease;
+      will-change: transform, box-shadow, filter;
+    }
+    .glow-btn:hover{ transform: translateY(-1px); filter: brightness(1.03); box-shadow: 0 14px 36px rgba(34,211,238,.32); }
+    .glow-btn:active{ transform: translateY(0); }
+    .glow-btn::before{
+      content:""; position:absolute; inset:-120% -30%;
+      background: linear-gradient(105deg, transparent 45%, rgba(255,255,255,.22) 50%, transparent 55%);
+      transform: translateX(-30%); pointer-events:none; transition: transform .7s ease;
+    }
+    .glow-btn:hover::before{ transform: translateX(30%); }
+
+    .coming-soon-btn{ cursor:not-allowed; opacity:.9; }
+    .coming-soon-btn[aria-disabled="true"]:hover{ transform:none; box-shadow:var(--shadow); }
+    .coming-soon-btn span{ font-size:.9rem; opacity:.9; }
+
+    /* Features */
+    #features{ display:grid; grid-template-columns:repeat(12, 1fr); gap:1.2rem; padding:2rem 0 3rem; }
+    .feature{
+      grid-column: span 6; position:relative; min-width:0;
+      border-radius:16px; padding:1.4rem; box-shadow: var(--shadow);
+      /* Dark inner fill for high contrast + gradient border */
+      background: linear-gradient(180deg, var(--card-bg1), var(--card-bg2)) padding-box,
+                  linear-gradient(135deg, var(--brand-start), var(--brand-end)) border-box;
+      border:1px solid transparent; backdrop-filter:var(--blur);
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+    .feature:hover{ transform: translateY(-2px); box-shadow:0 16px 44px rgba(0,0,0,.38); filter: saturate(105%); }
+    .feature:hover{ transform: translateY(-2px); box-shadow:0 16px 44px rgba(0,0,0,.38); filter: saturate(105%); }
+    .feature:hover{ transform: translateY(-2px); box-shadow:0 16px 44px rgba(0,0,0,.38); filter: saturate(105%); }
+    .feature h3{
+      font-family:'Montserrat',sans-serif; font-size:1.24rem; font-weight:700;
+      margin:0 0 .6rem; color:var(--card-title); letter-spacing:.2px; overflow-wrap:anywhere; word-break:break-word;
+    }
+    .feature p{ margin:.35rem 0; line-height:1.6; color:var(--card-text); overflow-wrap:anywhere; word-break:break-word; }
+    .feature .details{ max-height:0; overflow:hidden; transition:max-height .5s ease, padding .5s ease; padding:0 .25rem; }
+    .feature.open .details{ padding:.6rem .25rem; }
+
+    /* FAQ */
+    #faq{ padding: 2rem 0; }
+    #faq h2{ font-family:'Montserrat',sans-serif; font-size:2rem; color:var(--c1); margin:0 0 1rem; }
+    .faq-item{ border:1px solid var(--c2); border-radius:12px; padding:1rem; margin-bottom:1rem; background:var(--glass); backdrop-filter:var(--blur); box-shadow: var(--shadow); }
+    .faq-item summary{ font-family:'Montserrat',sans-serif; font-size:1.05rem; cursor:pointer; outline:none; }
+    .faq-answer p{ margin:.55rem 0; }
+    .faq-image-wrap{ margin-top:.75rem; border-radius:12px; overflow:hidden; }
+    .faq-image-wrap img{ width:100%; height:auto; display:block; }
+
+    /* Author */
+    #author{ padding: 2rem 0 3rem; text-align:center; }
+    .certificate-wrapper{ max-width:720px; margin:0 auto 1rem; border-radius:14px; overflow:hidden; box-shadow: var(--shadow); border:1px solid var(--c2); background:var(--surface); }
+    .responsive-img{ width:100%; height:auto; display:block; }
+    .author-name{ font-family:'Montserrat',sans-serif; font-size:1.7rem; color:var(--c1); margin:.75rem 0 .25rem; }
+    .author-role{ color:var(--muted); margin:.25rem 0 1rem; }
+    .author-bio{ max-width:640px; margin:0 auto 1.2rem; line-height:1.7; color:var(--c3); }
+    .author-social{ display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
+    .author-social a{ padding:.55rem .9rem; border:1px solid var(--c2); border-radius:12px; background:var(--glass); }
+
+    /* Footer */
+    #main-footer{ padding:2rem 0; border-top:1px solid var(--c2); margin-top:2rem; background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.04)); }
+    #main-footer .footer-content{ text-align:center; color:var(--muted); }
+    #main-footer .footer-content p{ margin:.4rem 0; }
+
+    /* Reveal animations */
+    .fade-in{ opacity:0; transform:translateY(24px) scale(.985); transition: opacity .9s cubic-bezier(.23,1.03,.56,1), transform .9s cubic-bezier(.23,1.03,.56,1); }
+    .fade-in.visible{ opacity:1; transform:none; }
+
+    @media (max-width: 960px){ .feature{ grid-column: span 12; } }
+    @media (max-width: 640px){
+      #hero{ padding:3.5rem 0 2rem; }
+      #hero h1{ font-size:clamp(1.8rem, 8.5vw, 2.6rem); }
+      #hero p{ font-size:1rem; }
+      .container{ padding-left: calc(1rem + env(safe-area-inset-left, 0px)); padding-right: calc(1rem + env(safe-area-inset-right, 0px)); }
+      #features{ grid-template-columns: 1fr; }
+    }
+      #hero h1{ font-size:clamp(1.8rem, 8.5vw, 2.6rem); }
+      #hero p{ font-size:1rem; }
+    }
+  </style>
+</head>
+<body>
+  <svg id="stars-bg" aria-hidden="true"></svg>
+
+  <!-- HERO -->
+  <section id="hero" class="container center fade-in">
+    <h1>Chào mừng đến với J.A.R.V.I.S AI</h1>
+    <p>"Trade Smarter with J.A.R.V.I.S AI"</p>
+    <p>"Powered by Nam Nguyen"</p>
+    <div class="hero-buttons">
+      <button id="start-btn" class="glow-btn" title="Start Javis Agent (Free model)">Start Javis Agent (Free model)</button>
+      <button id="price-btn" class="glow-btn" title="Start Javis Agent (Pro Version)">Pro Version</button>
+      <button id="scroll-faq-btn" class="glow-btn" title="Xem FAQ">❓ FAQ</button>
+      <button id="scroll-author-btn" class="glow-btn" title="Xem tác giả">❇️ Tác giả</button>
+      <button class="coming-soon-btn" aria-disabled="true" disabled title="Tính năng sắp ra mắt">Start AI Live Trader <br><span>(coming soon...)</span></button>
+      <button id="live-trade-btn" class="glow-btn" style="display:none;" title="Bắt đầu Live Trade">🚀 Start AI Live Trade</button>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="container">
+    <article class="feature fade-in" data-index="0" role="button" tabindex="0" aria-expanded="false">
+      <h3>Thuật toán mạnh mẽ</h3>
+      <p>Ứng dụng mô hình học sâu và phân tích kỹ thuật, điều chỉnh linh hoạt theo biến động thị trường thời gian thực.</p>
+      <div class="details">
+        <p>Mô hình Deep Learning kết hợp LLM và Transformer được huấn luyện trên tập dữ liệu giá lịch sử 10 năm, cùng thuật toán attention nhỏ gọn để ưu tiên các tín hiệu quan trọng nhất, giúp dự báo biến động với độ chính xác cao.</p>
+      </div>
+    </article>
+
+    <article class="feature fade-in" data-index="1" role="button" tabindex="0" aria-expanded="false">
+      <h3>Giao diện thân thiện</h3>
+      <p>Thiết kế tối giản, trực quan, dễ dàng thao tác chọn cặp giao dịch và theo dõi tín hiệu chỉ với vài cú click.</p>
+      <div class="details">
+        <p>Giao diện responsive thích ứng mọi kích thước màn hình, hỗ trợ dark mode và widget kéo-thả, cho phép người dùng tùy chỉnh dashboard cá nhân chỉ trong vài giây.</p>
+        <p>Bạn cũng có thể phóng to, thu nhỏ biểu đồ chỉ với thao tác pinch &amp; zoom hoặc vuốt để di chuyển timeline.</p>
+      </div>
+    </article>
+
+    <article class="feature fade-in" data-index="2" role="button" tabindex="0" aria-expanded="false">
+      <h3>Hướng dẫn chi tiết</h3>
+      <p>Cung cấp các bước sử dụng rõ ràng: từ cách chọn symbol, gửi lệnh phân tích đến cách đọc kết quả và quản lý rủi ro.</p>
+      <div class="details">
+        <p>Từng bước tutorial được tích hợp ngay trong dashboard, kèm video minh họa và tooltip giải thích thuật ngữ chuyên sâu, giúp cả người mới và trader chuyên nghiệp đều dễ dàng nắm bắt.</p>
+        <p>Nhấn vào biểu tượng 'i' ở góc phải mỗi phần để xem giải thích thêm hoặc mở hẳn guide chi tiết.</p>
+      </div>
+    </article>
+
+    <article class="feature fade-in" data-index="3" role="button" tabindex="0" aria-expanded="false">
+      <h3>Bảo mật và tin cậy</h3>
+      <p>Dữ liệu người dùng được bảo vệ tuyệt đối. Hệ thống hoạt động ổn định, cập nhật liên tục để đảm bảo hiệu suất cao nhất.</p>
+      <div class="details">
+        <p>Mã hoá đầu cuối (end-to-end encryption) cho mọi request, chứng thực đa yếu tố (MFA) và hệ thống giám sát 24/7 với SLA 99.9%, bảo vệ thông tin và giao dịch của bạn an toàn tuyệt đối.</p>
+        <p>Hệ thống backup tự động hàng giờ đảm bảo dữ liệu không bao giờ bị mất, hỗ trợ restore chỉ với 1 click.</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="container fade-in" aria-label="Câu hỏi thường gặp">
+    <h2>FAQ</h2>
+
+    <details class="faq-item">
+      <summary>Cách hoạt động của JAVIS Trading Assistant?</summary>
+      <div class="faq-answer auto-format" data-raw="Khác với các bot giao dịch truyền thống – vốn chỉ làm theo quy tắc có sẵn, như “RSI quá mua thì bán” hay “đường MA cắt nhau thì mua” – JAVIS là một trợ lý giao dịch có khả năng tư duy linh hoạt, giống như một chuyên gia tài chính đang ngồi bên cạnh bạn.\n\nJAVIS không đơn thuần áp dụng một công thức cố định. Thay vào đó, nó sẽ quan sát thị trường ở thời điểm hiện tại, phân tích xem điều kiện hiện tại đang nghiêng về xu hướng nào (giảm, tăng, sideway?), sau đó mới chọn ra một phương pháp phân tích phù hợp nhất – chứ không “làm theo khuôn”.\n\n* Ví dụ:\n- Nếu thị trường đang biến động mạnh, JAVIS có thể gợi ý chiến lược bám theo xu hướng (trend following).\n- Nếu thị trường đang đi ngang, nó sẽ ưu tiên chiến lược bắt đỉnh đáy (mean reversion).\n\nĐiều đặc biệt hơn nữa là: với khả năng kế thừa các model OpenSource LLM hiện nay, JAVIS có thể giải thích bằng ngôn ngữ tự nhiên. Tức là, thay vì chỉ báo “Mua” hay “Bán”, JAVIS sẽ nói rõ tại sao nó chọn chiến lược đó, dựa trên những yếu tố gì – giúp bạn hiểu rõ để đưa ra quyết định, thay vì phải tin máy móc 100%.\n\nTóm lại: JAVIS không chỉ là một con bot, mà là một “đồng đội thông minh” hiểu thị trường và biết trò chuyện. Nó không thay thế bạn – mà hỗ trợ bạn giao dịch tốt hơn, hiểu thị trường sâu hơn."></div>
+      <div class="faq-image-wrap"><img src="static/faq1.png" alt="JAVIS" loading="lazy" decoding="async"></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Khả năng mới: Đứng ngoài thị trường</summary>
+      <div class="faq-answer auto-format" data-raw="Không giống như nhiều bot giao dịch luôn cố “làm gì đó” mỗi khi có tín hiệu kỹ thuật – JAVIS có khả năng phân tích sâu hơn, và nếu thấy thị trường đang trong trạng thái:\n- Nhiễu loạn, biến động không rõ xu hướng,\n- Tín hiệu phân kỳ hoặc xung đột,\n- Không có xác suất thắng đủ cao,\n...thì JAVIS sẽ chủ động kích hoạt hành động “Wait” – đứng ngoài thị trường.\n\nNói cách khác, JAVIS không ép bạn phải giao dịch mọi lúc, mà chọn thời điểm đáng để vào lệnh. Nếu chưa đủ điều kiện, nó sẽ thẳng thắn nói rằng: Thị trường lúc này chưa đủ rõ ràng, nên tạm thời đứng ngoài để bảo toàn vốn và tâm lý.\\n\nMột trader giỏi không chỉ biết khi nào nên mua hay bán – mà còn biết khi nào nên chờ. Và JAVIS có tư duy như vậy."></div>
+      <div class="faq-image-wrap"><img src="static/screenshot_2025_08_06.png" alt="JAVIS" loading="lazy" decoding="async"></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>JAVIS Agent chỉ đưa ra các kết quả dự đoán ở ngưỡng 55-60%?</summary>
+      <div class="faq-answer auto-format" data-raw="JAVIS không được tạo ra để “đánh bạc” với thị trường hay tìm kiếm một cú ăn đậm duy nhất. Ngược lại, JAVIS tập trung vào việc tìm kiếm những lợi thế nhỏ nhưng rõ ràng – các tình huống mà xác suất thắng nhỉnh hơn một chút so với trung bình (khoảng 55–60%).\n\nĐây chính là cách mà các trader chuyên nghiệp trên thế giới hoạt động. Họ không tìm cách “đoán đúng” tất cả mọi thứ, mà chỉ cần một chút thiên lệch xác suất, và lặp đi lặp lại nó một cách có kỷ luật – từ đó tạo nên lợi nhuận bền vững.\n\nNếu bạn đang tìm kiếm một trợ lý giao dịch biết khi nào có edge – và khi nào nên đứng ngoài, thì JAVIS chính là người bạn đồng hành lý tưởng.\nNhưng nếu bạn cần một “thần bài tài chính” để tìm cú big win một lần rồi nghỉ – có lẽ JAVIS không dành cho bạn."></div>
+      <div class="faq-image-wrap"><img src="static/55percent.png" alt="JAVIS" loading="lazy" decoding="async"></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Lý do mình Public</summary>
+      <div class="faq-answer auto-format" data-raw="Mình từng nghĩ rằng sẽ có một công thức “ăn lớn” trong thị trường – một cú trade lật đời. Nhưng càng đi sâu, mình càng hiểu ra một điều quan trọng:\nThành công trong trading không đến từ những pha thắng lớn, mà đến từ việc thắng nhỏ, đều đặn – và sống sót lâu nhất.\n\nJAVIS không giúp bạn làm giàu nhanh chóng – và mình cũng không kỳ vọng như vậy cho chính mình.\nThay vào đó, mình chọn một hướng đi khác:\n- Xây dựng công cụ hữu ích, chia sẻ với cộng đồng trader, và qua đó:\n- Tự rèn luyện khả năng phân tích & lập trình tài chính,\n- Nhận lại rất nhiều góp ý chân thành từ những người cùng chí hướng,\n- Và tạo ra một hành trình đi xa, bền vững hơn cùng thị trường.\n\nJAVIS không phải là “chiêu bí mật” để giấu riêng – nó là cách mình đồng hành cùng những ai đang nghiêm túc với việc giao dịch, học hỏi, và phát triển."></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Cách sử dụng JAVIS</summary>
+      <div class="faq-answer auto-format" data-raw="1. Click vào 'Start Javis Agent'\n2. Chọn thị trường (Forex, Coin...)\n3. Nhấn 'Phân tích' để nhận khuyến nghị điểm vào/ra lệnh, SL/TP\n4. Thực hiện lệnh trên sàn hoặc copy tín hiệu theo gợi ý."></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Định hướng nâng cấp: JAVIS live trade Agent</summary>
+      <div class="faq-answer auto-format" data-raw="Giai đoạn 2 sắp tới mục tiêu là phát triển JAVIS thành trí tuệ nhân tạo Trader, thay thế hoàn toàn trader truyền thống.\n\nỞ giai đoạn này, JAVIS Agent sẽ hoạt động Demo với nguyên tắc:\n- Rủi ro mỗi giao dịch chỉ 1% – đảm bảo an toàn vốn cho người dùng.\n- Lợi thế xác suất (edge) ở mức 55–60% – không quá phô trương, nhưng đủ để tạo ra lợi nhuận ổn định nếu áp dụng đúng cách.\n\nVới triết lý “đi chậm để đi xa”, mình tin rằng JAVIS hoàn toàn có thể phát triển thành một AI Trader thực thụ trong tương lai – không phải kiểu máy móc mua bán vô tội vạ, mà là một chiến binh thông minh, kiên nhẫn, hiểu thị trường và biết quản lý rủi ro.\n\nMục tiêu của mình không phải là xây dựng một AI “đánh đâu thắng đó”, mà là tạo ra một đồng đội giao dịch an toàn – người bạn có thể tin cậy để đồng hành trên con đường đầu tư dài hạn."></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Lưu ý khi sử dụng JAVIS Agent</summary>
+      <div class="faq-answer auto-format" data-raw="JAVIS không phải là lời khuyên đầu tư.\nTất cả các phân tích, nhận định từ JAVIS chỉ mang tính chất tham khảo – như một người bạn đưa ra góc nhìn bổ sung. Quyết định đầu tư và quản lý vốn cuối cùng luôn thuộc về bạn.\n\nKhông nên sử dụng JAVIS trong thời điểm thị trường biến động mạnh.\nJAVIS hoạt động hiệu quả nhất trong môi trường ổn định, ít nhiễu thông tin. Trong những tuần lễ có tin tức quan trọng, họp FED, chỉ số kinh tế lớn, hoặc tin tức chính trị bất thường, tác giả khuyến nghị bạn nên đứng ngoài hoặc không sử dụng JAVIS để vào lệnh.\n\nJAVIS Live Trader (coming soon): chiến lược xác suất cao – rủi ro thấp.\nPhiên bản sắp ra mắt “Live Trader” của JAVIS sẽ hoạt động theo nguyên tắc:\n- Tận dụng lợi thế xác suất nhỏ (edge 55–60%),\n- Kết hợp với quản trị rủi ro chặt chẽ (risk ~1%/giao dịch),\n- Không “phán đoán đỉnh đáy”, mà tìm điểm vào hợp lý với lợi thế rõ ràng.\n\nĐây là chiến lược phù hợp với người dùng nghiêm túc, hiểu rõ về xác suất và không kỳ vọng “làm giàu nhanh”. Người dùng nên thận trọng trong phân bổ vốn và không nên sử dụng JAVIS như công cụ giao dịch tự động hoàn toàn mà không có hiểu biết đi kèm."></div>
+    </details>
+  </section>
+
+  <!-- AUTHOR -->
+  <section id="author" class="container fade-in">
+    <div class="certificate-wrapper">
+      <img src="static/the5er.png" alt="Chứng nhận" class="responsive-img" loading="lazy" decoding="async">
+    </div>
+    <div class="certificate-wrapper">
+      <img src="static/certificate.jpg" alt="Chứng nhận" class="responsive-img" loading="lazy" decoding="async">
+    </div>
+
+    <h3 class="author-name">Nam Nguyen</h3>
+    <p class="author-role">Funded trader • The5er / IT software</p>
+    <div class="author-bio">🎓 B.Sc. in Information Technology · 💰 Funded Trader @The5%ers · 👨‍💻 Creator of JAVIS, a Natural Language AI Trading Assistant built from real market experience and disciplined execution.</div>
+
+    <nav class="author-social" aria-label="Liên kết mạng xã hội của tác giả">
+      <a href="https://www.facebook.com/nam.acoustic.33">Facebook</a>
+      <a href="https://www.tiktok.com/@nam_trading">Tiktok</a>
+      <a href="https://github.com/namtrader15">GitHub</a>
+      <a href="https://chat.zalo.me/0564313288">Zalo</a>
+    </nav>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="main-footer" class="fade-in">
+    <div class="container footer-content">
+      <p>&copy; "Patience, probability, and code." — The foundation behind JAVIS.</p>
+      <p><a href="mailto:nguyenthanhnam.pye@gmail.com">📩 nguyenthanhnam.pye@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // iOS keyboard safe-guard (chỉ chạy nếu #inputrow tồn tại)
+    (function(){
+      try{
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)){
+          const row = document.getElementById('inputrow');
+          if (row){
+            window.addEventListener('focusin', ()=> row.style.transform = 'translateY(-280px)');
+            window.addEventListener('focusout',()=> row.style.transform = '');
+          }
+        }
+      }catch(e){}
+    })();
+
+    // Sao động (tôn trọng prefers-reduced-motion)
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stars = Array.from({length:48},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.2+0.6,dur:Math.random()*5+4}));
+    const starsBG = document.getElementById('stars-bg');
+    function drawStars(){
+      const w = innerWidth, h = innerHeight;
+      const starColor = getComputedStyle(document.documentElement).getPropertyValue('--star').trim() || '#a7eaff';
+      starsBG.setAttribute('width', w);
+      starsBG.setAttribute('height', h);
+      starsBG.innerHTML = stars.map((s,i)=>{
+        const anim = reduceMotion ? '' : `<animate attributeName="opacity" values="0.1;1;0.1" dur="${s.dur.toFixed(2)}s" repeatCount="indefinite" begin="${(i*0.7).toFixed(2)}s"/>`;
+        return `<circle cx="${(s.x*w).toFixed(1)}" cy="${(s.y*h).toFixed(1)}" r="${s.r.toFixed(1)}" fill="${starColor}" opacity="0.72">${anim}</circle>`;
+      }).join('');
+    }
+    addEventListener('resize', drawStars);
+    addEventListener('DOMContentLoaded', drawStars);
+
+    // Điều hướng
+    document.getElementById('start-btn')?.addEventListener('click', () => { window.open('http://127.0.0.1:5000', '_blank'); });
+    document.getElementById('price-btn')?.addEventListener('click', () => { window.open('price.html', '_blank', 'noopener,noreferrer'); });
+    document.getElementById('live-trade-btn')?.addEventListener('click', () => window.open('/live_trade', '_blank', 'noopener,noreferrer'));
+
+    // Fade-in theo viewport
+    addEventListener('DOMContentLoaded', () => {
+      const els = document.querySelectorAll('.fade-in');
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} });
+      }, { threshold: .12 });
+      els.forEach(el=> io.observe(el));
+    });
+
+    // Toggle feature (click + keyboard + ARIA)
+    addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.feature').forEach(f => {
+        const details = f.querySelector('.details');
+        const update = (open) => {
+          f.classList.toggle('open', open);
+          f.setAttribute('aria-expanded', String(open));
+          details.style.maxHeight = open ? details.scrollHeight + 'px' : null;
+        };
+        const toggle = () => update(!f.classList.contains('open'));
+        f.addEventListener('click', toggle);
+        f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); } });
+      });
+    });
+
+    // Smooth scroll với offset
+    addEventListener('DOMContentLoaded', () => {
+      function smoothScrollTo(id, offset = 100){
+        const target = document.getElementById(id);
+        if(!target) return;
+        requestAnimationFrame(() => {
+          const y = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        });
+      }
+      document.getElementById('scroll-faq-btn')?.addEventListener('click', () => smoothScrollTo('faq'));
+      document.getElementById('scroll-author-btn')?.addEventListener('click', () => smoothScrollTo('author'));
+    });
+
+    // Auto-format FAQ từ data-raw (giữ đúng nội dung gốc)
+    function formatFAQ(raw){
+      const text = raw.replaceAll("\\n", "\n");
+      const blocks = text.split(/\n\s*\n/);
+      return blocks.map(block => {
+        if (block.trim().startsWith('- ') || block.trim().startsWith('* ')){
+          const items = block.trim().split(/\n+/).map(item => `<li>${item.replace(/^[-*] /, '').trim()}</li>`);
+          return `<ul style='margin-left:1.2rem'>${items.join('')}</ul>`;
+        } else {
+          return `<p>${block.trim().replace(/\n/g, '<br>')}</p>`;
+        }
+      }).join('');
+    }
+    document.querySelectorAll('.faq-answer.auto-format').forEach(el => {
+      const raw = el.dataset.raw; if (raw) el.innerHTML = formatFAQ(raw);
+    });
+    // Page fade-in khi load
+  addEventListener('DOMContentLoaded', () => document.body.classList.add('page-in'));
+
+  // Button ripple micro-interaction
+  addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.glow-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        if (reduceMotion) return;
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        r.style.width = r.style.height = size + 'px';
+        r.style.left = (e.clientX - rect.left - size/2) + 'px';
+        r.style.top = (e.clientY - rect.top - size/2) + 'px';
+        btn.appendChild(r);
+        r.addEventListener('animationend', () => r.remove());
+      });
+    });
+  });
+</script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"SoftwareApplication",
+      "name":"JAVIS",
+      "applicationCategory":"FinanceApplication",
+      "operatingSystem":"Web",
+      "description":"Trợ lý giao dịch AI tập trung xác suất và quản trị rủi ro.",
+      "creator":{"@type":"Person","name":"Nam Nguyen"},
+      "url":"https://your-domain.com/"
+    }
+  </script>
+
+<!-- Nhạc nền -->
+<audio id="bg-music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+  Trình duyệt của bạn không hỗ trợ audio.
+</audio>
+
+<script>
+  const music = document.getElementById('bg-music');
+
+  function fadeInAudio() {
+    music.volume = 0;
+    music.muted = false;
+    music.play().then(() => {
+      let vol = 0;
+      const fade = setInterval(() => {
+        if (vol < 1) {
+          vol += 0.05;
+          music.volume = vol;
+        } else {
+          clearInterval(fade);
+        }
+      }, 100);
+    }).catch(err => {
+      console.log("Không phát được:", err);
+    });
+  }
+
+  // Thử autoplay khi load trang
+  window.addEventListener('load', () => {
+    music.muted = true; // autoplay thường chỉ cho phép mute
+    music.play().then(() => {
+      // Sau khi play mute, bỏ mute + fade-in
+      fadeInAudio();
+    }).catch(() => {
+      // Nếu bị chặn autoplay -> chờ click đầu tiên
+      const startMusicOnClick = () => {
+        fadeInAudio();
+        document.removeEventListener('click', startMusicOnClick);
+      };
+      document.addEventListener('click', startMusicOnClick);
+    });
+  });
+</script>
+
+
+</body>
+</html>
