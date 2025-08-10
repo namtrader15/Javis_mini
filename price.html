@@ -122,7 +122,7 @@
     .usdt-note{ color:var(--muted); font-size:12px; margin-top:6px }
   </style>
 </head>
-<body data-currency="VND" class="soft">
+<body data-currency="USDT" class="soft">
   <header class="nav">
     <div class="container nav-inner">
       <div class="logo">
@@ -140,19 +140,56 @@
     <section class="hero reveal">
       <div class="kicker">Bảng giá</div>
       <h1>Trợ lý giao dịch AI — các gói phù hợp mọi nhu cầu</h1>
-      <p class="sub">Chọn gói JARVIS (Lite, Core, Max, Quant) theo mục tiêu giao dịch của bạn. Giá hiển thị theo <strong id="currencyLabel">VND</strong>; có thể đổi sang USDT. <strong>Rẻ hơn khi thanh toán bằng USDT</strong>. Ưu đãi: hoàn 50% khi nâng cấp gói trong tháng đầu & hoàn 30% khi thanh toán 6 tháng.</p>
+      <p class="sub">Chọn gói JARVIS (Lite, Core, Max, Quant) theo mục tiêu giao dịch của bạn. Giá hiển thị theo <strong id="currencyLabel">USDT</strong>; có thể đổi sang VND. <strong>Rẻ hơn khi thanh toán bằng USDT</strong>. Ưu đãi: hoàn 50% khi nâng cấp gói trong tháng đầu & hoàn 30% khi thanh toán 6 tháng.</p>
 
       <div class="toolbar" role="toolbar" aria-label="Tùy chọn hiển thị">
         <span class="badge">Đơn vị tiền tệ</span>
-        <button id="currencySwitch" class="switch" role="switch" aria-checked="false" aria-label="Đổi VND/USDT">
+        <button id="currencySwitch" class="switch" role="switch" aria-checked="true" aria-label="Đổi VND/USDT">
           <span class="knob"></span>
         </button>
-        <span id="currencyHint">VND ↔ USDT</span>
+        <span id="currencyHint">USDT — giá ưu đãi</span>
         <span class="badge alt">Rẻ hơn khi trả USDT</span>
       </div>
     </section>
 
-    <!-- ====== Pricing grid ====== -->
+    <!-- ====== Model Info — ĐƯỢC ĐƯA LÊN TRÊN PRICING ====== -->
+    <section id="models" class="table-card reveal" aria-label="Thông tin model">
+      <h3 style="padding:18px 22px 0; margin:0">Dòng Model J.A.R.V.I.S</h3>
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">Kiến trúc ML cốt lõi (mô tả gọn)</th>
+            <th scope="col">Thông số chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="model-name">JARVIS Lite</span></td>
+            <td>2 layer <span class="help" tabindex="0" data-tip="Mạng nơ-ron truyền thẳng (Feed-Forward): đơn giản, suy luận rất nhanh."><strong>Feed‑Forward NN</strong></span> (FC‑ReLU) + tính năng OHLC/indicator</td>
+            <td>~ 50k tham số • Độ trễ ≈ 10 ms</td>
+          </tr>
+          <tr>
+            <td><span class="model-name">JARVIS Core</span></td>
+            <td><span class="help" tabindex="0" data-tip="LSTM: mạng nơ-ron hồi quy có bộ nhớ, xử lý chuỗi thời gian dài, giảm quên thông tin."><strong>LSTM</strong></span>‑Hybrid — Conv 1D tiền xử lý + 2 stack LSTM nhận chuỗi 128 bước</td>
+            <td>~ 1M tham số • Tái huấn luyện hàng tuần</td>
+          </tr>
+          <tr>
+            <td><span class="model-name">JARVIS Max</span></td>
+            <td><span class="help" tabindex="0" data-tip="Transformer Encoder: cơ chế attention giúp mô hình tập trung vào điểm dữ liệu quan trọng trong chuỗi."><strong>Transformer Encoder</strong></span> 6 block, 12 head attention + <span class="help" tabindex="0" data-tip="Reinforcement Learning fine‑tune: tinh chỉnh dựa trên phần thưởng như P/L.">RL fine‑tune</span> trên P/L</td>
+            <td>~ 25M tham số • Tốc độ 30 ms</td>
+          </tr>
+          <tr>
+            <td><span class="model-name">JARVIS Quant</span></td>
+            <td><strong>Ensemble</strong> (<span class="help" tabindex="0" data-tip="Kết hợp nhiều mô hình như Transformer, TFT, Graph NN để tăng độ ổn định.">Transformer + Temporal Fusion Transformer + Graph NN</span>) • Auto‑tune bằng <span class="help" tabindex="0" data-tip="Bayesian Optimization: tìm siêu tham số tối ưu với ít lần thử nghiệm.">Bayesian Opt</span></td>
+            <td>~ 60M tham số • Dự báo đa thị trường</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="padding:10px 22px 18px"><div class="note">* Thông số mang tính tham chiếu để ước lượng độ phức tạp & hiệu năng suy luận.</div></div>
+    </section>
+
+    <!-- ====== Pricing grid (sau phần Model) ====== -->
     <section>
       <div class="grid" id="pricingGrid">
         <!-- Cards will be injected by JS using PRICES -->
@@ -193,43 +230,6 @@
       </div>
     </section>
 
-    <!-- ====== Model Info ====== -->
-    <section id="models" class="table-card reveal" aria-label="Thông tin model">
-      <h3 style="padding:18px 22px 0; margin:0">Dòng Model J.A.R.V.I.S</h3>
-      <table class="tbl">
-        <thead>
-          <tr>
-            <th scope="col">Model</th>
-            <th scope="col">Kiến trúc ML cốt lõi (mô tả gọn)</th>
-            <th scope="col">Thông số chính</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="model-name">JARVIS Lite</span></td>
-            <td>2 layer <span class="help" tabindex="0" data-tip="Mạng nơ-ron truyền thẳng (Feed-Forward): đơn giản, suy luận rất nhanh."><strong>Feed‑Forward NN</strong></span> (FC‑ReLU) + tính năng OHLC/indicator</td>
-            <td>~ 50k tham số • Độ trễ ≈ 10 ms</td>
-          </tr>
-          <tr>
-            <td><span class="model-name">JARVIS Core</span></td>
-            <td><span class="help" tabindex="0" data-tip="LSTM: mạng nơ-ron hồi quy có bộ nhớ, xử lý chuỗi thời gian dài, giảm quên thông tin."><strong>LSTM</strong></span>‑Hybrid — Conv 1D tiền xử lý + 2 stack LSTM nhận chuỗi 128 bước</td>
-            <td>~ 1M tham số • Tái huấn luyện hàng tuần</td>
-          </tr>
-          <tr>
-            <td><span class="model-name">JARVIS Max</span></td>
-            <td><span class="help" tabindex="0" data-tip="Transformer Encoder: cơ chế attention giúp mô hình tập trung vào điểm dữ liệu quan trọng trong chuỗi."><strong>Transformer Encoder</strong></span> 6 block, 12 head attention + <span class="help" tabindex="0" data-tip="Reinforcement Learning fine‑tune: tinh chỉnh dựa trên phần thưởng như P/L.">RL fine‑tune</span> trên P/L</td>
-            <td>~ 25M tham số • Tốc độ 30 ms</td>
-          </tr>
-          <tr>
-            <td><span class="model-name">JARVIS Quant</span></td>
-            <td><strong>Ensemble</strong> (<span class="help" tabindex="0" data-tip="Kết hợp nhiều mô hình như Transformer, TFT, Graph NN để tăng độ ổn định.">Transformer + Temporal Fusion Transformer + Graph NN</span>) • Auto‑tune bằng <span class="help" tabindex="0" data-tip="Bayesian Optimization: tìm siêu tham số tối ưu với ít lần thử nghiệm.">Bayesian Opt</span></td>
-            <td>~ 60M tham số • Dự báo đa thị trường</td>
-          </tr>
-        </tbody>
-      </table>
-      <div style="padding:10px 22px 18px"><div class="note">* Thông số mang tính tham chiếu để ước lượng độ phức tạp & hiệu năng suy luận.</div></div>
-    </section>
-
     <!-- ====== Payment ====== -->
     <section id="payment" class="section-card reveal">
       <h3>Thanh toán</h3>
@@ -262,7 +262,7 @@
 
     const PLANS = [
       {
-        key: 'free', title: 'Free', model:'Javis Lite', pill:null, term: 'tháng',
+        key: 'free', title: 'Free', model:'model: Javis Lite', pill:null, term: 'tháng',
         features:[
           '3 lời khuyên(tín hiệu)/ngày',
           'Cặp khả dụng: XAUUSD (forex), BTCUSDT (crypto)'
@@ -270,7 +270,7 @@
         cta: [{ label:'Dùng miễn phí', href:'http://127.0.0.1:5000', target:'_blank', rel:'noopener noreferrer' }]
       },
       {
-        key: 'basic', title: 'Basic — Dùng thử 15 ngày', model:'Javis Core', pill:'Trial 15 ngày', term:'15 ngày',
+        key: 'basic', title: 'Basic — Dùng thử 15 ngày', model:'model: Javis Core', pill:'Trial 15 ngày', term:'15 ngày',
         features:[
           '10 lời khuyên(tín hiệu)/ngày',
           'Cặp khả dụng: Gói Free + 1 cặp tuỳ yêu cầu'
@@ -278,7 +278,7 @@
         cta: [{ label:'Mua gói Trial', href:'#payment' }]
       },
       {
-        key: 'starter', title: 'Starter+', model:'Javis Core', pill:'Hoàn 50% khi nâng cấp', term:'tháng', recommended:true,
+        key: 'starter', title: 'Starter+', model:'model: Javis Core', pill:'Hoàn 50% khi nâng cấp', term:'tháng', recommended:true,
         features:[
           '30 lời khuyên(tín hiệu)/ngày',
           'Cặp khả dụng: Gói Free + 2 cặp tuỳ yêu cầu (forex hoặc altcoin trên Binance)'
@@ -286,7 +286,7 @@
         cta: [{ label:'Chọn Starter+', href:'#payment' }]
       },
       {
-        key: 'pro', title: 'Pro', model:'Javis Max', pill:'Tặng 1 tháng khi mua 2', term:'tháng',
+        key: 'pro', title: 'Pro', model:'model: Javis Max', pill:'Tặng 1 tháng khi mua 2', term:'tháng',
         features:[
           '70 lời khuyên(tín hiệu)/ngày',
           'Cặp khả dụng: Basic + 5 cặp tuỳ yêu cầu (forex hoặc altcoin trên Binance)'
@@ -294,7 +294,7 @@
         cta: [{ label:'Chọn Pro', href:'#payment' }]
       },
       {
-        key: 'enterprise', title: 'Enterprise', model:'JARVIS Quant', pill:'Model tốt nhất', term:'tháng',
+        key: 'enterprise', title: 'Enterprise', model:'model: JARVIS Quant', pill:'Model tốt nhất', term:'tháng',
         features:[
           'Không giới hạn lời khuyên',
           'Cặp khả dụng: tất cả cặp chính Forex + toàn bộ altcoin list Binance'
@@ -302,7 +302,7 @@
         cta: [{ label:'Chọn Enterprise', href:'#payment' }]
       },
       {
-        key: 'lifetime', title: 'Quant — Trọn đời', model:'JARVIS Quant', pill:'Sử dụng + bảo hành trọn đời', term:'trọn đời',
+        key: 'lifetime', title: 'Quant — Trọn đời', model:'model: JARVIS Quant', pill:'Sử dụng + bảo hành trọn đời', term:'trọn đời',
         features:[
           'JARVIS Quant model: Sử dụng + bảo hành trọn đời',
           'Liên hệ thêm để biết thông tin'
@@ -318,7 +318,6 @@
       return currency === 'VND' ? `${fmtVND.format(amount)}đ` : `${amount} USDT`;
     };
 
-    
     function planPrice(currency, key){
       const p = PRICES[currency][key];
       return fmt(currency, p);
@@ -334,18 +333,27 @@
         const card = document.createElement('article');
         card.className = 'card' + (p.recommended ? ' reco' : '');
         card.innerHTML = `
-          <div class=\"chip\">${p.model}</div>
-          <div class=\"title\">${p.title}</div>
+          <div class="chip">${p.model}</div>
+          <div class="title">${p.title}</div>
           <div>
-            <div class=\"price\">${price}</div>
-            <div class=\"term\">/ ${term}</div>
+            <div class="price">${price}</div>
+            <div class="term">/ ${term}</div>
           </div>
-          ${p.pill ? `<div class=\"pill\">${p.pill}</div>` : ''}
-          <ul class=\"features\">${p.features.map(x=>`<li>${x}</li>`).join('')}</ul>
-          <div class=\"cta-row\">${p.cta.map(c=>`<a class=\"btn\" href=\"${c.href}\">${c.label}</a>`).join('')}</div>
+          ${p.pill ? `<div class="pill">${p.pill}</div>` : ''}
+          <ul class="features">${p.features.map(x=>`<li>${x}</li>`).join('')}</ul>
+          <div class="cta-row">${p.cta.map(c=>`<a class="btn" href="${c.href}">${c.label}</a>`).join('')}</div>
         `;
         grid.appendChild(card);
       });
+    }
+
+    // ====== Đồng bộ UI theo đơn vị tiền tệ ======
+    function syncCurrencyUI(){
+      const c = document.body.dataset.currency;
+      const isUSDT = c === 'USDT';
+      document.getElementById('currencyLabel').textContent = c;
+      document.getElementById('currencyHint').textContent = isUSDT ? 'USDT — giá ưu đãi' : 'VND ↔ USDT';
+      document.getElementById('currencySwitch').setAttribute('aria-checked', isUSDT);
     }
 
     // Currency switch
@@ -354,14 +362,13 @@
       const current = document.body.dataset.currency;
       const next = current === 'VND' ? 'USDT' : 'VND';
       document.body.dataset.currency = next;
-      currencySwitch.setAttribute('aria-checked', next === 'USDT');
-      document.getElementById('currencyLabel').textContent = next;
-      document.getElementById('currencyHint').textContent = next === 'USDT' ? 'USDT — giá ưu đãi' : 'VND ↔ USDT';
+      syncCurrencyUI();
       renderCards();
     });
 
     // Kickoff
     document.getElementById('year').textContent = new Date().getFullYear();
+
     // Init reveal IO
     if ('IntersectionObserver' in window){
       window.io = new IntersectionObserver(entries => {
@@ -369,6 +376,9 @@
       }, { threshold: .12 });
       document.querySelectorAll('.reveal').forEach(el => window.io.observe(el));
     }
+
+    // Lần đầu tải trang: ưu tiên USDT
+    syncCurrencyUI();
     renderCards();
   </script>
 </body>
