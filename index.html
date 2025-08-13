@@ -67,6 +67,47 @@ body{ margin:0; font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Rob
     .spacer{ height:2rem; }
 
     /* Hero */
+    /* HERO — bg.jpg làm nền toàn màn hình + lớp phủ + ken burns */
+    #hero{
+      position: relative;
+      min-height: 92vh;            /* gần full màn hình để tạo ấn tượng */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 0 4rem;
+      isolation: isolate;          /* đảm bảo lớp phủ đúng layer */
+    }
+    #hero::before{
+      content: "";
+      position: absolute; inset: 0;
+      background: url('static/55percent.png') center / cover no-repeat;
+      transform: scale(1.06);      /* nhẹ để tránh viền đen */
+      filter: saturate(110%) contrast(105%);
+      z-index: -2;
+      animation: kb 22s ease-out forwards;
+    }
+    #hero::after{
+      content: "";
+      position: absolute; inset: 0;
+      /* phủ tối nhẹ để chữ/CTA nổi bật */
+      background:
+        radial-gradient(70% 60% at 50% 40%, rgba(3,7,18,.05), rgba(3,7,18,.65)),
+        linear-gradient(180deg, rgba(10,12,30,.55) 0%, rgba(10,12,30,.9) 70%);
+      z-index: -1;
+    }
+    @keyframes kb { from { transform: scale(1.04); } to { transform: scale(1.12); } }
+    @media (prefers-reduced-motion: reduce){ #hero::before{ animation: none; } }
+
+    /* Tấm “glass” đặt phía sau nội dung để đọc dễ hơn trên ảnh */
+    .hero-panel{
+      background: rgba(10,16,33,.55);
+      backdrop-filter: blur(10px) saturate(120%);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 35px rgba(0,0,0,.35);
+    }
+
     #hero{ padding:5rem 0 3rem; }
     #hero h1{
       font-family:'Montserrat',sans-serif; font-weight:800; letter-spacing:.2px;
@@ -161,22 +202,68 @@ body{ margin:0; font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Rob
       #hero p{ font-size:1rem; }
     }
   </style>
+<style>
+/* === Hero: make it full-bleed & let bg.jpg shine === */
+/* If #hero still has the `container` class, break it out to full viewport width */
+#hero.container{
+  max-width: none !important;
+  width: 100vw !important;
+  margin-left: 50% !important;
+  transform: translateX(-50%) !important;
+  padding-left: clamp(16px, 4vw, 48px) !important;
+  padding-right: clamp(16px, 4vw, 48px) !important;
+}
+/* Ensure min height uses small viewport units on mobile UI with toolbars */
+#hero{ min-height: 100svh !important; }
+/* Lighten overlay so the background image becomes the star */
+#hero::after{
+  background:
+    radial-gradient(70% 60% at 50% 40%, rgba(3,7,18,0.00), rgba(3,7,18,0.55)),
+    linear-gradient(180deg, rgba(10,12,30,0.35) 0%, rgba(10,12,30,0.65) 70%) !important;
+}
+/* Slightly reduce the glass darkness for better balance */
+.hero-panel{
+  background: rgba(10,16,33,0.45) !important;
+}
+@media (max-width: 640px){
+  #hero::before{
+    background-image: url('static/mobile_bg.png') !important;
+    background-position: center top !important;
+    background-size: cover !important;
+    transform: none !important; /* tránh crop quá mạnh trên màn hẹp */
+  }
+  /* tinh chỉnh panel để gọn hơn trên mobile */
+  .hero-panel{ padding: 1rem !important; border-radius: 12px !important; }
+}
+
+/* Tuỳ chọn: hỗ trợ màn hình HiDPI nếu có mobile_bg@2x.png */
+@media (max-width: 640px) and (-webkit-min-device-pixel-ratio: 2),
+       (max-width: 640px) and (min-resolution: 192dpi){
+  #hero::before{
+    background-image: image-set(
+      url('static/mobile_bg.png') 1x
+      /* , url('static/mobile_bg@2x.png') 2x */ /* bật nếu bạn có file 2x */
+    ) !important;
+  }
+}
+</style>
 </head>
 <body>
   <svg id="stars-bg" aria-hidden="true"></svg>
-
   <!-- HERO -->
   <section id="hero" class="container center fade-in">
-    <h1>Chào mừng đến với J.A.R.V.I.S AI</h1>
-    <p>"Trade Smarter with J.A.R.V.I.S AI"</p>
-    <p>"Powered by Nam Nguyen"</p>
-    <div class="hero-buttons">
-      <button id="start-btn" class="glow-btn" title="Start Javis Agent (Free model)">Start Javis Agent (Free model)</button>
-      <button id="price-btn" class="glow-btn" title="Start Javis Agent (Pro Version)">Pro Version</button>
-      <button id="scroll-faq-btn" class="glow-btn" title="Xem FAQ">❓ FAQ</button>
-      <button id="scroll-author-btn" class="glow-btn" title="Xem tác giả">❇️ Tác giả</button>
-      <button class="coming-soon-btn" aria-disabled="true" disabled title="Tính năng sắp ra mắt">Start AI Live Trader <br><span>(coming soon...)</span></button>
-      <button id="live-trade-btn" class="glow-btn" style="display:none;" title="Bắt đầu Live Trade">🚀 Start AI Live Trade</button>
+    <div class="hero-panel">
+      <h1>Chào mừng đến với J.A.R.V.I.S AI</h1>
+      <p>"Trade Smarter with J.A.R.V.I.S AI"</p>
+      <p>"Powered by Nam Nguyen"</p>
+      <div class="hero-buttons">
+        <button id="start-btn" class="glow-btn" title="Start Javis Agent (Free model)">Start Javis Agent (Free model)</button>
+        <button id="price-btn" class="glow-btn" title="Start Javis Agent (Pro Version)">Pro Version</button>
+        <button id="scroll-faq-btn" class="glow-btn" title="Xem FAQ">❓ FAQ</button>
+        <button id="scroll-author-btn" class="glow-btn" title="Xem tác giả">❇️ Tác giả</button>
+        <button class="coming-soon-btn" aria-disabled="true" disabled title="Tính năng sắp ra mắt">Start AI Live Trader <br><span>(coming soon...)</span></button>
+        <button id="live-trade-btn" class="glow-btn" style="display:none;" title="Bắt đầu Live Trade">🚀 Start AI Live Trade</button>
+      </div>
     </div>
   </section>
 
@@ -285,7 +372,7 @@ body{ margin:0; font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Rob
   <!-- FOOTER -->
   <footer id="main-footer" class="fade-in">
     <div class="container footer-content">
-      <p>&copy; "Start strong, stay disciplined." — The foundation behind JAVIS.</p>
+      <p>&copy; "Patience, probability, and code." — The foundation behind JAVIS.</p>
       <p><a href="mailto:nguyenthanhnam.pye@gmail.com">📩 nguyenthanhnam.pye@gmail.com</a></p>
     </div>
   </footer>
@@ -464,4 +551,3 @@ body{ margin:0; font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Rob
 
 </body>
 </html>
-
