@@ -121,6 +121,68 @@
     .badge.alt{ background:color-mix(in oklab, var(--accent) 14%, transparent); border-color:color-mix(in oklab, var(--accent) 28%, transparent) }
     .usdt-note{ color:var(--muted); font-size:12px; margin-top:6px }
   </style>
+
+<link rel="preload" as="image" href="static/bg.jpg">
+<style>
+/* === Pricing Hero: full-bleed spotlight background === */
+.hero{
+  position: relative;
+  width: 100vw !important;
+  margin-left: 50% !important;
+  transform: translateX(-50%) !important;
+  padding-left: clamp(16px, 4vw, 48px) !important;
+  padding-right: clamp(16px, 4vw, 48px) !important;
+  min-height: 78svh;
+  display: flex;
+  align-items: center;
+  isolation: isolate;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background: url('static/bg.jpg') center / cover no-repeat;
+  transform: scale(1.06);
+  filter: saturate(110%) contrast(105%);
+  z-index: -2;
+  animation: heroKB 24s ease-out forwards;
+}
+.hero::after{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(72% 58% at 50% 44%, rgba(3,7,18,.02), rgba(3,7,18,.55)),
+    linear-gradient(180deg, rgba(10,12,30,.35) 0%, rgba(10,12,30,.75) 70%);
+  z-index: -1;
+}
+@keyframes heroKB{ from{ transform: scale(1.03) } to{ transform: scale(1.10) } }
+@media (prefers-reduced-motion: reduce){ .hero::before{ animation: none } }
+
+/* Swap to mobile image */
+@media (max-width: 640px){
+  .hero::before{
+    background-image: url('static/mobile_bg.png') !important;
+    background-position: center top !important;
+    transform: none;
+  }
+}
+
+/* Glass panel to keep text readable on top of the image */
+.hero .glass{
+  background: color-mix(in oklab, var(--panel) 65%, transparent);
+  backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid color-mix(in oklab, var(--text) 12%, transparent);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 18px;
+  max-width: min(980px, 95vw);
+}
+
+/* Tighten inner spacing on smaller screens */
+@media (max-width: 640px){
+  .hero{ min-height: 70svh }
+  .hero .glass{ padding: 14px; border-radius: 14px }
+}
+</style>
 </head>
 <body data-currency="USDT" class="soft">
   <header class="nav">
@@ -138,6 +200,8 @@
 
   <main class="container">
     <section class="hero reveal">
+<div class="glass">
+
       <div class="kicker">Bảng giá</div>
       <h1>Trợ lý giao dịch AI — các gói phù hợp mọi nhu cầu</h1>
       <p class="sub">Chọn gói JARVIS (Lite, Core, Max, Quant) theo mục tiêu giao dịch của bạn. Giá hiển thị theo <strong id="currencyLabel">USDT</strong>; có thể đổi sang VND. <strong>Rẻ hơn khi thanh toán bằng USDT</strong>. Ưu đãi: hoàn 50% khi nâng cấp gói trong tháng đầu & hoàn 30% khi thanh toán 6 tháng.</p>
@@ -150,7 +214,9 @@
         <span id="currencyHint">USDT — giá ưu đãi</span>
         <span class="badge alt">Rẻ hơn khi trả USDT</span>
       </div>
-    </section>
+    
+</div>
+</section>
 
     <!-- ====== Model Info — ĐƯỢC ĐƯA LÊN TRÊN PRICING ====== -->
     <section id="models" class="table-card reveal" aria-label="Thông tin model">
@@ -204,6 +270,7 @@
           <li>Hoàn lại 50% khi nâng cấp lên gói cao hơn trong tháng đầu (áp dụng cho mọi gói).</li>
           <li>Thanh toán 6 tháng: hoàn ngay 30% tổng giá trị (tuỳ theo phương thức Banking/USDT).</li>
           <li>Bảo hành 1:1 qua UltraView trong thời gian sử dụng; hỗ trợ cài đặt từ xa.</li>
+          <li>Chạy tại máy tính cá nhân, kết nối MT5 của bạn — dữ liệu giá lấy trực tiếp từ broker đang giao dịch.</li>
           <li>Chạy tại máy tính cá nhân, kết nối MT5 của bạn — dữ liệu giá lấy trực tiếp từ broker đang giao dịch.</li>
         </ul>
         <h3>Yêu cầu hệ thống tối thiểu</h3>
@@ -391,5 +458,4 @@
   </script>
 </body>
 </html>
-
 
