@@ -247,8 +247,172 @@ body{ margin:0; font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Rob
   }
 }
 </style>
+
+
+
+<style>
+/* === Fixed top-left social links (stacked, brand-accurate) === */
+.top-social{
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  left: calc(12px + env(safe-area-inset-left, 0px));
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 16px;
+  background: rgba(10,16,33,.6);
+  -webkit-backdrop-filter: saturate(130%) blur(10px);
+  backdrop-filter: saturate(130%) blur(10px);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 12px 32px rgba(0,0,0,.45);
+}
+
+.top-social .btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 14px 24px rgba(0,0,0,.25);
+  transition: transform .15s ease, filter .25s ease, box-shadow .25s ease;
+}
+
+.top-social .btn:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 2px 0 rgba(255,255,255,.12) inset, 0 18px 40px rgba(0,0,0,.35);
+}
+
+/* Brand backgrounds (solid, no gradients to keep logos "gốc") */
+.top-social .btn[data-brand="zalo"]{ background: #0068FF; }
+.top-social .btn[data-brand="facebook"]{ background: #1877F2; }
+.top-social .btn[data-brand="telegram"]{ background: #2AABEE; }
+
+/* Icons are rendered in white, labels in white for contrast */
+.top-social .ico{
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+}
+.top-social .ico path,
+.top-social .ico rect{ fill: #FFFFFF; }
+.top-social .ico text{ fill: #FFFFFF; font-weight: 700; }
+
+.top-social .label{
+  color: #FFFFFF;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+/* Mobile tweaks */
+@media (max-width: 640px){
+  .top-social{ gap: 8px; padding: 8px; }
+  .top-social .btn{ padding: 10px; }
+  .top-social .label{ font-size: 13px; }
+}
+</style>
+<style>
+
+/* === Telegram QR Modal === */
+.tg-modal{ position: fixed; inset:0; display:none; z-index: 10000; }
+.tg-modal[aria-hidden="false"]{ display:block; }
+.tg-backdrop{
+  position:absolute; inset:0;
+  background: rgba(0,0,0,.6);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+.tg-dialog{
+  position:relative;
+  width:min(92vw, 440px);
+  margin: 10vh auto 0;
+  background: #0b1226;
+  color: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+.tg-dialog h3{ margin: 0 0 8px; font-size: 18px; font-weight: 700; }
+.tg-content{ display:grid; gap:10px; justify-items:center; }
+.tg-content img{
+  width: min(80vw, 360px);
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.15);
+  box-shadow: 0 10px 28px rgba(0,0,0,.4);
+  background: #fff;
+}
+.tg-close{
+  position:absolute; right:8px; top:8px;
+  width: 32px; height: 32px;
+  font-size: 22px; line-height: 1;
+  border-radius: 10px;
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.18);
+  cursor: pointer;
+}
+.tg-close:hover{ filter: brightness(1.12); }
+.tg-content .hint{ opacity:.9; font-size: 14px; text-align:center; margin: 0; }
+
+/* Ensure Z icon isn't overridden by generic fills */
+.top-social .ico path[stroke]{ fill: none !important; }
+
+</style>
 </head>
 <body>
+
+  
+  
+  <nav class="top-social" aria-label="Liên kết mạng xã hội">
+    <a class="btn" data-brand="zalo" href="https://zalo.me/0564313288" target="_blank" rel="noopener noreferrer" title="Zalo">
+      <!-- Zalo icon: simple "Z" glyph to avoid text rendering issues -->
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="ico">
+        <path d="M6 7H18L6 17H18" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="label"><strong>Zalo:</strong> 0564313288</span>
+    </a>
+
+    <a class="btn" data-brand="facebook" href="https://www.facebook.com/NTNTrader" target="_blank" rel="noopener noreferrer" title="Facebook">
+      <!-- Facebook "f" -->
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="ico">
+        <path d="M22 12a10 10 0 1 0-11.563 9.874v-6.984H7.898V12h2.539V9.797c0-2.506 1.493-3.89 3.778-3.89 1.095 0 2.24.195 2.24.195v2.462h-1.262c-1.243 0-1.631.771-1.631 1.562V12h2.773l-.443 2.89h-2.33v6.984A10.002 10.002 0 0 0 22 12z"/>
+      </svg>
+      <span class="label">Facebook</span>
+    </a>
+
+    <a class="btn" data-brand="telegram" href="tg://resolve?phone=%2B84564313288" title="Telegram">
+      <!-- Telegram paper plane -->
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="ico">
+        <path d="M21.94 4.61a1.25 1.25 0 0 0-1.28-.21L3.61 12.03a1.25 1.25 0 0 0 .11 2.33l4.77 1.63 1.69 5.06a1.25 1.25 0 0 0 2.23.27l2.56-3.87 4.75 3.6a1.25 1.25 0 0 0 1.97-.77l2.1-15.08a1.25 1.25 0 0 0-.85-1.46ZM9.15 13.81l8.8-5.41-6.7 6.88a1.25 1.25 0 0 0-.33.63l-.31 2.27-1.46-4.37Z"/>
+      </svg>
+      <span class="label">Telegram</span>
+    </a>
+  </nav>
+  <!-- Telegram QR Modal -->
+  <div id="tg-qr-modal" class="tg-modal" aria-hidden="true" role="dialog" aria-labelledby="tg-qr-title">
+    <div class="tg-backdrop" data-role="tg-qr-close" aria-hidden="true"></div>
+    <div class="tg-dialog" role="document">
+      <button class="tg-close" type="button" title="Đóng" aria-label="Đóng" data-role="tg-qr-close">×</button>
+      <h3 id="tg-qr-title">Quét QR để mở Telegram</h3>
+      <div class="tg-content">
+        <img src="static/telegram.jfif" alt="QR Telegram" loading="lazy"/>
+        <p class="hint">Mở Telegram và quét mã này, hoặc thêm số <strong>+84 564 313 288</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+
+
+
   <svg id="stars-bg" aria-hidden="true"></svg>
   <!-- HERO -->
   <section id="hero" class="container center fade-in">
@@ -410,7 +574,7 @@ body{ margin:0; font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Rob
     addEventListener('DOMContentLoaded', drawStars);
 
     // Điều hướng
-    document.getElementById('start-btn')?.addEventListener('click', () => { window.open('https://bc305ec476bf.ngrok-free.app', '_blank'); });
+    document.getElementById('start-btn')?.addEventListener('click', () => { window.open('http://127.0.0.1:5000', '_blank'); });
     document.getElementById('price-btn')?.addEventListener('click', () => { window.open('price.html', '_blank', 'noopener,noreferrer'); });
     document.getElementById('live-trade-btn')?.addEventListener('click', () => window.open('/live_trade', '_blank', 'noopener,noreferrer'));
 
@@ -547,8 +711,28 @@ body{ margin:0; font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Rob
     });
   });
 </script>
+  
+<script>
+(function(){
+  var tel = document.querySelector('.top-social a[data-brand="telegram"]');
+  if(!tel) return;
+  var appLink = 'tg://resolve?phone=%2B84564313288';
+  var fallbackWeb = 'https://t.me/Namtrader15';
 
+  tel.addEventListener('click', function(e){
+    e.preventDefault();
+    var t = Date.now();
+    // Try to open Telegram app
+    window.location.href = appLink;
+    // Fallback to web if app doesn't open
+    setTimeout(function(){
+      if (Date.now() - t < 1500) {
+        window.location.href = fallbackWeb;
+      }
+    }, 900);
+  }, {passive:false});
+})();
+</script>
 
 </body>
 </html>
-
